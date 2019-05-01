@@ -1,10 +1,8 @@
 ﻿using AHAS.WS.INFRA.DATA.Context;
 using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AHAS.WS.INFRA.DATA.Repository
 {

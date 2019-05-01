@@ -9,10 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\AHAS.WS.INFRA.DATA\AHAS.WS.INFRA.DATA.csproj" />
     <ProjectReference Include="..\AHAS.WS.LOGIC.DOMAIN\AHAS.WS.LOGIC.DOMAIN.csproj" />
   </ItemGroup>
 

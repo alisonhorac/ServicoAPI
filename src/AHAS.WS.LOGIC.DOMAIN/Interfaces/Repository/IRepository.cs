@@ -1,7 +1,5 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository
 {

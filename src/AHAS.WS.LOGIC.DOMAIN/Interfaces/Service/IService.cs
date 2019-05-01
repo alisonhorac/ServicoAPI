@@ -1,9 +1,8 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
 using FluentValidation;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
+//Install-Package FluentValidation.AspNetCore -Version 8.3.0
 namespace AHAS.WS.LOGIC.DOMAIN.Interfaces.Service
 {
     public interface IService<Entidade> where Entidade : BaseEntity

@@ -1,8 +1,5 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AHAS.WS.LOGIC.SERVICE.Validators
 {
@@ -14,8 +11,8 @@ namespace AHAS.WS.LOGIC.SERVICE.Validators
             RuleFor(x => x.Estado).NotNull();
             RuleFor(x => x.Sigla).NotNull();
 
-            RuleFor(x => x.Estado).Length(0, 10);
-            RuleFor(x => x.Sigla).Length(0, 10);
+            RuleFor(x => x.Estado).Length(2, 25);
+            RuleFor(x => x.Sigla).Length(2, 2);
         }
     }
 }

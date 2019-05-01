@@ -1,9 +1,7 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
+//Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 2.1.8
 namespace AHAS.WS.INFRA.DATA.Context
 {
     public class DataBaseSQLContext : DbContext
