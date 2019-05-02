@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.SERVICE.Services;
 using AHAS.WS.LOGIC.SERVICE.Validators;
@@ -88,11 +90,15 @@ namespace AHAS.WS.WEB.APPLICATION.Controllers
         {
             try
             {
-               return new ObjectResult(service.Get(id));
+                return new ObjectResult(service.Get(id));
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (ArgumentException ex)
             {
-                return NotFound(ex);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

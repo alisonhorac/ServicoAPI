@@ -39,7 +39,12 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
 
         public IList<Entidade> Get()
         {
-            return repository.Listar();
+            var result = repository.Listar();
+
+            if (result == null)
+                throw new HttpRequestException("Não foram encontrados resultados.");
+
+            return result;
         }
 
         public Entidade Get(int id)
@@ -47,13 +52,18 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
             if (id == 0)
                 throw new ArgumentException("ID informado inválido.");
 
+            var result = repository.Consultar(id);
+
+            if (result == null)
+                throw new HttpRequestException("Não foram encontrados resultados.");
+
             return repository.Consultar(id);
         }
 
         private void Validate(Entidade obj, AbstractValidator<Entidade> validator)
         {
             if (obj == null)
-                throw new Exception("Registros não detectados!");
+                throw new Exception("Dados não foram fornecidos.");
 
             validator.ValidateAndThrow(obj);
         }
