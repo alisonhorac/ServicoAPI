@@ -88,7 +88,7 @@ namespace AHAS.WS.WEB.APPLICATION.Controllers
         {
             try
             {
-                return new ObjectResult(service.Get(id));
+               return new ObjectResult(service.Get(id));
             }
             catch (ArgumentException ex)
             {

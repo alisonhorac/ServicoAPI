@@ -12,53 +12,56 @@ namespace AHAS.WS.INFRA.DATA.Context
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
             builder.Property(c => c.CNPJ)
                 .IsRequired()
                 .HasColumnName("CNPJ")
-                .HasMaxLength(14)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(14)")
+                .HasMaxLength(14);
 
             builder.Property(c => c.IE)
                 .IsRequired()
                 .HasColumnName("IE")
-                .HasMaxLength(14)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(14)")
+                .HasMaxLength(14);
 
             builder.Property(c => c.Centro)
                 .IsRequired()
                 .HasColumnName("Centro")
-                .HasMaxLength(4)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(4)")
+                .HasMaxLength(4);
 
             builder.Property(c => c.Codigo)
                 .IsRequired()
                 .HasColumnName("Codigo")
-                .HasMaxLength(4)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(4)")
+                .HasMaxLength(4);
 
             builder.Property(c => c.LocalNegocio)
                 .IsRequired()
                 .HasColumnName("LocalNegocio")
-                .HasMaxLength(4)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(4)")
+                .HasMaxLength(4);
 
             builder.Property(c => c.UF)
                 .IsRequired()
                 .HasColumnName("UF")
-                .HasMaxLength(2)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(2)")
+                .HasMaxLength(2);
 
             builder.Property(c => c.Unidade)
                 .IsRequired()
                 .HasColumnName("Unidade")
-                .HasMaxLength(100)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(100)")
+                .HasMaxLength(100);
 
             builder.Property(c => c.Sigla)
                 .IsRequired()
                 .HasColumnName("Sigla")
-                .HasMaxLength(15)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(15)")
+                .HasMaxLength(15);
 
             builder.HasIndex(c => c.CNPJ)
                 .IsUnique(true);

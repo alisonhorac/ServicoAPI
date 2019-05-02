@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.SERVICE.Services;
 using AHAS.WS.LOGIC.SERVICE.Validators;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AHAS.WS.WEB.APPLICATION.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class EstadoSAPController : ControllerBase

@@ -12,6 +12,9 @@ namespace AHAS.WS.INFRA.DATA.Context
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
             builder.Property(c => c.Conta)
                 .IsRequired()
                 .HasColumnName("Conta");
@@ -19,8 +22,8 @@ namespace AHAS.WS.INFRA.DATA.Context
             builder.Property(c => c.Balanco)
                 .IsRequired()
                 .HasColumnName("Balanco")
-                .HasMaxLength(75)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(75)")
+                .HasMaxLength(75);
 
             builder.HasIndex(c => c.Conta)
                 .IsUnique(true);

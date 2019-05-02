@@ -4,6 +4,7 @@ using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 namespace AHAS.WS.LOGIC.SERVICE.Services

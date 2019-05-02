@@ -2,6 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 
 //Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 2.1.8
+//Install-Package Microsoft.EntityFrameworkCore -Version 2.1.8
+//Install-Package Microsoft.EntityFrameworkCore.Tools -Version 2.1.8
+//update-database
+//dotnet ef migrations add InicialMigration
+//update-database
 namespace AHAS.WS.INFRA.DATA.Context
 {
     public class DataBaseSQLContext : DbContext
@@ -19,8 +24,6 @@ namespace AHAS.WS.INFRA.DATA.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<ContaContabil>(new ContaContabilConfig().Configure);
             modelBuilder.Entity<Documento>(new DocumentoConfig().Configure);
             modelBuilder.Entity<Empresa>(new EmpresaConfig().Configure);

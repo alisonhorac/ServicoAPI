@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AHAS.WS.WEB.APPLICATION.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class DocumentoController : ControllerBase

@@ -12,17 +12,20 @@ namespace AHAS.WS.INFRA.DATA.Context
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
             builder.Property(c => c.Sigla)
                 .IsRequired()
                 .HasColumnName("Sigla")
-                .HasMaxLength(2)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(2)")
+                .HasMaxLength(2);
 
             builder.Property(c => c.Denominacao)
                 .IsRequired()
                 .HasColumnName("Denominacao")
-                .HasMaxLength(50)
-                .HasColumnType("VARCHAR");
+                .HasColumnType("VARCHAR(50)")
+                .HasMaxLength(50);
 
             builder.HasIndex(c => c.Sigla)
                 .IsUnique(true);
