@@ -1,31 +1,33 @@
-﻿using AHAS.WS.INFRA.DATA.Repository;
-using AHAS.WS.LOGIC.DOMAIN.Entities;
+﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
+using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 
 namespace AHAS.WS.LOGIC.SERVICE.Services
 {
-    public class BaseService<Entidade> : IService<Entidade> where Entidade : BaseEntity
+    public class BaseService<Entidade> : IBaseService<Entidade> where Entidade : BaseEntity
     {
-        private BaseRepository<Entidade> repository = new BaseRepository<Entidade>();
+        private readonly IRepository<Entidade> _baseRepository;
+
+        public BaseService(IRepository<Entidade> baseRepository)
+        {
+            _baseRepository = baseRepository;
+        }
 
         public Entidade Post<Validacao>(Entidade obj) where Validacao : AbstractValidator<Entidade>
         {
             Validate(obj, Activator.CreateInstance<Validacao>());
 
-            repository.Inserir(obj);
+            _baseRepository.Inserir(obj);
             return obj;
         }
 
         public Entidade Put<Validacao>(Entidade obj) where Validacao : AbstractValidator<Entidade>
         {
-            Validate(obj, Activator.CreateInstance<Validacao>());
-
-            repository.Alterar(obj);
+            _baseRepository.Alterar(obj);
             return obj;
         }
 
@@ -34,12 +36,12 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
             if (id == 0)
                 throw new ArgumentException("ID informado inválido.");
 
-            repository.Excluir(id);
+            _baseRepository.Excluir(id);
         }
 
         public IList<Entidade> Get()
         {
-            var result = repository.Listar();
+            var result = _baseRepository.Listar();
 
             if (result == null)
                 throw new HttpRequestException("Não foram encontrados resultados.");
@@ -52,18 +54,19 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
             if (id == 0)
                 throw new ArgumentException("ID informado inválido.");
 
-            var result = repository.Consultar(id);
+            var result = _baseRepository.Consultar(id);
 
             if (result == null)
                 throw new HttpRequestException("Não foram encontrados resultados.");
 
-            return repository.Consultar(id);
+
+            return _baseRepository.Consultar(id);
         }
 
         private void Validate(Entidade obj, AbstractValidator<Entidade> validator)
         {
             if (obj == null)
-                throw new Exception("Dados não foram fornecidos.");
+                throw new HttpRequestException("Dados não foram fornecidos.");
 
             validator.ValidateAndThrow(obj);
         }

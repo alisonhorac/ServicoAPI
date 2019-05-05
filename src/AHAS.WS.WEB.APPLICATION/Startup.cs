@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AHAS.WS.INFRA.DATA.Context;
+using AHAS.WS.INFRA.DATA.Repository;
+using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
+using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
+using AHAS.WS.LOGIC.SERVICE.Services;
+using AHAS.WS.LOGIC.SERVICE.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore.Mvc;
+using SimpleInjector.Lifestyles;
 
 namespace AHAS.WS.WEB.APPLICATION
 {
     public class Startup
     {
+        private Container container = new Container();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,13 +28,28 @@ namespace AHAS.WS.WEB.APPLICATION
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+            // Register services
+            container.Register<IContaContabilService, ContaContabilService>(Lifestyle.Scoped);
+            container.Register<IContaContabilRepository, ContaContabilRepository>(Lifestyle.Scoped);
+
+            container.Register(typeof(IBaseService<>), typeof(BaseService<>));
+            container.Register(typeof(IRepository<>), typeof(BaseRepository<>));
+
+            container.Register<DataBaseSQLContext>(Lifestyle.Scoped);
+
+            // Register controllers DI resolution
+            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(container));
+
+            // Wrap AspNet requests into Simpleinjector's scoped lifestyle
+            services.UseSimpleInjectorAspNetRequestScoping(container);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -39,6 +60,9 @@ namespace AHAS.WS.WEB.APPLICATION
             {
                 app.UseHsts();
             }
+
+            container.RegisterMvcControllers(app);
+            container.Verify();
 
             app.UseHttpsRedirection();
             app.UseMvc();

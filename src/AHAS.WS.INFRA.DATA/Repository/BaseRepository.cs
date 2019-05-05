@@ -2,40 +2,81 @@
 using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace AHAS.WS.INFRA.DATA.Repository
 {
     public class BaseRepository<Entidade> : IRepository<Entidade> where Entidade : BaseEntity
     {
-        private DataBaseSQLContext context = new DataBaseSQLContext();
+        protected DataBaseSQLContext db;
+
+        public BaseRepository(DataBaseSQLContext context)
+        {
+            db = context;
+        }
 
         public void Alterar(Entidade obj)
         {
-            context.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            context.SaveChanges();
+            try
+            {
+                db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
 
         public Entidade Consultar(int id)
         {
-            return context.Set<Entidade>().Find(id);
+            try
+            {
+                return db.Set<Entidade>().Find(id);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
 
         public void Excluir(int id)
         {
-            context.Set<Entidade>().Remove(context.Set<Entidade>().Find(id));
-            context.SaveChanges();
+            try
+            {
+                db.Set<Entidade>().Remove(db.Set<Entidade>().Find(id));
+                db.SaveChanges();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
 
         public void Inserir(Entidade obj)
         {
-            context.Set<Entidade>().Add(obj);
-            context.SaveChanges();
+            try
+            {
+                db.Set<Entidade>().Add(obj);
+                db.SaveChanges();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
 
         public IList<Entidade> Listar()
         {
-            return context.Set<Entidade>().ToList();
+            try
+            {
+                return db.Set<Entidade>().ToList();
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
         }
     }
 }
