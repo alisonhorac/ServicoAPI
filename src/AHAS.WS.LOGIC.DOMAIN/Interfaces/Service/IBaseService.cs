@@ -8,9 +8,9 @@ namespace AHAS.WS.LOGIC.DOMAIN.Interfaces.Service
 {
     public interface IBaseService<Entidade> where Entidade : BaseEntity
     {
-        Entidade Post<V>(Entidade obj) where V : AbstractValidator<Entidade>;
+        Entidade Post(Entidade obj);
 
-        Entidade Put<V>(Entidade obj) where V : AbstractValidator<Entidade>;
+        Entidade Put(Entidade obj);
 
         void Delete(int id);
 

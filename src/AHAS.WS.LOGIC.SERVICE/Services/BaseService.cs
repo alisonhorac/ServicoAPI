@@ -1,7 +1,6 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
-using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -17,15 +16,13 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
             _baseRepository = baseRepository;
         }
 
-        public Entidade Post<Validacao>(Entidade obj) where Validacao : AbstractValidator<Entidade>
+        public Entidade Post(Entidade obj)
         {
-            Validate(obj, Activator.CreateInstance<Validacao>());
-
             _baseRepository.Inserir(obj);
             return obj;
         }
 
-        public Entidade Put<Validacao>(Entidade obj) where Validacao : AbstractValidator<Entidade>
+        public Entidade Put(Entidade obj)
         {
             _baseRepository.Alterar(obj);
             return obj;
@@ -61,14 +58,6 @@ namespace AHAS.WS.LOGIC.SERVICE.Services
 
 
             return _baseRepository.Consultar(id);
-        }
-
-        private void Validate(Entidade obj, AbstractValidator<Entidade> validator)
-        {
-            if (obj == null)
-                throw new HttpRequestException("Dados não foram fornecidos.");
-
-            validator.ValidateAndThrow(obj);
         }
     }
 }

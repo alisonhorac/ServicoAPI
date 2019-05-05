@@ -1,5 +1,4 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
-using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using FluentValidation;
 
 namespace AHAS.WS.LOGIC.SERVICE.Validators

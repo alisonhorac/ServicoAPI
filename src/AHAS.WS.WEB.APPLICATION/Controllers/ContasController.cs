@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Net.Http;
 using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
-using AHAS.WS.LOGIC.SERVICE.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AHAS.WS.WEB.APPLICATION.Controllers
@@ -27,7 +26,7 @@ namespace AHAS.WS.WEB.APPLICATION.Controllers
         {
             try
             {
-                _baseService.Post<ContaContabilValidator>(item);
+                _baseService.Post(item);
 
                 return Ok(item.Id);
             }
@@ -54,7 +53,7 @@ namespace AHAS.WS.WEB.APPLICATION.Controllers
         {
             try
             {
-                _baseService.Put<ContaContabilValidator>(item);
+                _baseService.Put(item);
 
                 return Ok(item);
             }

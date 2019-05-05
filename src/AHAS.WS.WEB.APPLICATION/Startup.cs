@@ -1,10 +1,12 @@
 ﻿using AHAS.WS.INFRA.DATA.Context;
 using AHAS.WS.INFRA.DATA.Repository;
+using AHAS.WS.LOGIC.DOMAIN.Entities;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
 using AHAS.WS.LOGIC.SERVICE.Services;
 using AHAS.WS.LOGIC.SERVICE.Validators;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +36,15 @@ namespace AHAS.WS.WEB.APPLICATION
 
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
-            // Register services
+            // Registrar Validator
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add(typeof(ValidatorActionFilter));
+            }).AddFluentValidation(fvc => { });
+
+            services.AddTransient<IValidator<ContaContabil>, ContaContabilValidator>();
+
+            // Registrar services
             container.Register<IContaContabilService, ContaContabilService>(Lifestyle.Scoped);
             container.Register<IContaContabilRepository, ContaContabilRepository>(Lifestyle.Scoped);
 
@@ -43,10 +53,9 @@ namespace AHAS.WS.WEB.APPLICATION
 
             container.Register<DataBaseSQLContext>(Lifestyle.Scoped);
 
-            // Register controllers DI resolution
+            // Registrar DI
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(container));
 
-            // Wrap AspNet requests into Simpleinjector's scoped lifestyle
             services.UseSimpleInjectorAspNetRequestScoping(container);
         }
 
