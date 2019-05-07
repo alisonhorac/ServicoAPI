@@ -5,6 +5,7 @@ using AHAS.WS.LOGIC.DOMAIN.Interfaces.Repository;
 using AHAS.WS.LOGIC.DOMAIN.Interfaces.Service;
 using AHAS.WS.LOGIC.SERVICE.Services;
 using AHAS.WS.LOGIC.SERVICE.Validators;
+using AHAS.WS.LOGIC.SERVICE.Validators.Rules;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;

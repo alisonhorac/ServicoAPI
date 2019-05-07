@@ -1,7 +1,7 @@
 ﻿using AHAS.WS.LOGIC.DOMAIN.Entities;
 using FluentValidation;
 
-namespace AHAS.WS.LOGIC.SERVICE.Validators
+namespace AHAS.WS.LOGIC.SERVICE.Validators.Rules
 {
     public class EstadoSAPValidator : AbstractValidator<EstadoSAP>
     {
